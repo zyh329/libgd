@@ -237,7 +237,10 @@ int read_image_tga( gdIOCtx *ctx, oTga *tga )
 			return -1;
 		}
 
-		gdGetBuf(conversion_buffer, image_block_size, ctx);
+		if (gdGetBuf(conversion_buffer, image_block_size, ctx) != image_block_size) {
+			gdFree(conversion_buffer);
+			return -1;
+		}
 
 		while (buffer_caret < image_block_size) {
 			tga->bitmap[buffer_caret] = (int) conversion_buffer[buffer_caret];
@@ -261,7 +264,11 @@ int read_image_tga( gdIOCtx *ctx, oTga *tga )
 			return -1;
 		}
 
-		gdGetBuf( conversion_buffer, image_block_size, ctx );
+		if (gdGetBuf(conversion_buffer, image_block_size, ctx) != image_block_size) {
+			gdFree(conversion_buffer);
+			gdFree(decompression_buffer);
+			return -1;
+		}
 
 		buffer_caret = 0;
 
