@@ -8,7 +8,7 @@ int main(int argc, char **argv)
     gdImagePtr im;
     FILE *fp = gdTestFileOpen("tga/bug00247.tga");
     im = gdImageCreateFromTga(fp);
-    if (im != NULL)
-	gdImageDestroy(im);
-    return 0;
+    gdTestAssert(im == NULL);
+    fclose(fp);
+    return gdNumFailures();
 }
