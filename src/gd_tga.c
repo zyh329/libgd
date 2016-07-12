@@ -238,6 +238,7 @@ int read_image_tga( gdIOCtx *ctx, oTga *tga )
 		}
 
 		if (gdGetBuf(conversion_buffer, image_block_size, ctx) != image_block_size) {
+			gd_error("gd-tga: premature end of image data\n");
 			gdFree(conversion_buffer);
 			return -1;
 		}
@@ -260,6 +261,7 @@ int read_image_tga( gdIOCtx *ctx, oTga *tga )
 		}
 		conversion_buffer = (unsigned char *) gdMalloc(image_block_size * sizeof(unsigned char));
 		if (conversion_buffer == NULL) {
+			gd_error("gd-tga: premature end of image data\n");
 			gdFree( decompression_buffer );
 			return -1;
 		}
